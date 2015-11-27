@@ -1,0 +1,122 @@
+<!DOCTYPE html>	
+<html>
+
+<body style="background-color: black">
+<div>
+<canvas id="myCanvas" width="600" height="500" style="">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<img id="1_1" src="1_1.png" style="display: none"/>
+<img id="1_2" src="1_2.png" style="display: none"/>
+<img id="2_1" src="2_1.png" style="display: none"/>
+<img id="2_2" src="2_2.png" style="display: none"/>
+<img id="3_1" src="3_1.png" style="display: none"/>
+<img id="3_2" src="3_2.png" style="display: none"/>
+<img id="4_1" src="4_1.png" style="display: none"/>
+<img id="4_2" src="4_2.png" style="display: none"/>
+<img id="Fechado" src="Fechado.png" style="display: none"/>
+<img id="Bolinha" src="Bolinha.png" style="display: none"/>
+
+
+<script>
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		
+		var maxWidth = 400;
+		var maxHeight = 400;
+		
+		var xinicial = 0;
+        var yinicial = 0; 
+		
+		var direcao = 1;
+		
+		var time = 200;
+		
+		var vez = 0;	
+		
+		function bolinhas()
+		{
+			for(var i=0; i<= maxWidth + 22; i+=22)
+			{
+				for(var j=0; j<= maxHeight + 19; j+=19)
+				{
+					if(i == 0 || j >= maxHeight || i >= maxWidth || j == 0 )
+						ctx.drawImage(document.getElementById("Bolinha"), i,j);
+				}
+			}
+		}
+
+		function loop()
+		{	
+			ctx.clearRect(xinicial,yinicial, 22, 19);
+		
+			if(xinicial <= 0 && yinicial<=0 )
+			{
+				direcao = 1;				
+				bolinhas();
+			}
+			
+			if(xinicial >= maxWidth && yinicial<=0 )
+			{
+				direcao = 2;
+			}
+			
+			if(xinicial >= maxWidth && yinicial>= maxHeight)
+			{
+				direcao = 3;
+			}
+			
+			if(xinicial <= 0 && yinicial >= maxHeight)
+			{
+				direcao = 4;
+			}
+			
+			if(direcao == 1)
+			{
+				xinicial += 22;
+			}
+			if(direcao == 2)
+			{
+				yinicial += 19;
+			}
+			if(direcao == 3)
+			{
+				xinicial-=22;
+			}
+			if(direcao == 4)
+			{
+				yinicial-=19;
+			}
+			var tmp = vez % 3;
+			var img = null;
+			if( tmp == 0)
+			{
+				 img = document.getElementById(direcao + "_2");
+				 vez = 0;				
+			}
+			else if( tmp == 1)
+			{
+				 img = document.getElementById(direcao + "_1");				
+			}
+			else if( tmp == 2)
+			{
+				 img = document.getElementById("Fechado");				
+			}			
+			ctx.drawImage(img, xinicial,yinicial);			
+			vez++;
+			setTimeout(loop, time);
+		}
+		
+		setTimeout(loop, time);
+</script>
+
+
+<style>
+
+</style>
+</div>
+</body>
+</html>
+
+
